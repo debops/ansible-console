@@ -26,7 +26,7 @@ console_motd: |
     -------------------------------------------------
 
 # List of required console packages
-console_base_packages: [ 'locales' ]
+console_base_packages: [ 'locales', 'python-passlib' ]
 
 # List of useful console packages to install
 console_extra_packages: [ 'ncurses-term', 'vim', 'mc', 'ranger', 'tmux', 'zsh', 'htop',
