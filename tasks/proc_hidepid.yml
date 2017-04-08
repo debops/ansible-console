@@ -5,7 +5,7 @@
     name: '{{ console_proc_hidepid_group }}'
     system: True
     state: 'present'
-  when: console_proc_hidepid is defined and console_proc_hidepid
+  when: console_proc_hidepid|d()
 
 - name: Configure /proc with hidepid= in /etc/fstab
   mount:
@@ -14,7 +14,7 @@
     fstype: 'proc'
     opts: 'defaults,hidepid={{ console_proc_hidepid_level }},gid={{ console_proc_hidepid_group }}'
     state: 'mounted'
-  when: console_proc_hidepid is defined and console_proc_hidepid
+  when: console_proc_hidepid|d()
 
   # This is a workaround for Ubuntu bug: https://bugs.launchpad.net/ubuntu/+source/mountall/+bug/1039887
 - name: Remount /proc from rc.local when needed
@@ -24,7 +24,7 @@
     line: 'mount -o remount,hidepid={{ console_proc_hidepid_level }},gid={{ console_proc_hidepid_group }} /proc'
     insertbefore: 'exit 0'
     state: 'present'
-  when: ((console_proc_hidepid is defined and console_proc_hidepid) and
+  when: (console_proc_hidepid|d() and
          (ansible_distribution in [ 'Ubuntu' ] and ansible_distribution_release in [ 'trusty' ]))
 
 - name: Create the systemd-logind configuration directory

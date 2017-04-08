@@ -85,7 +85,9 @@ console_locales_default: ''
 # /etc/fstab manually (and optionally remount command from /etc/rc.local)
 # because if Ansible tries to do this using the 'mount' module, it will try to
 # remove the /proc mount point as well. :-(
-console_proc_hidepid: True
+console_proc_hidepid: '{{ (False
+                if (ansible_virtualization_role == "guest" and ansible_virtualization_type == "lxc")
+                else True) | bool }}'
 
 # What level of hidepid= to use (choices: 0, 1, 2)
 console_proc_hidepid_level: '2'
