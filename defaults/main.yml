@@ -30,7 +30,7 @@ console_motd: |
     -------------------------------------------------
 
 # List of required console packages
-console_base_packages: [ 'locales' ]
+console_base_packages: [ 'locales', 'python-passlib' ]
 
 # List of packages to install depending on a condition
 console_conditional_packages:
